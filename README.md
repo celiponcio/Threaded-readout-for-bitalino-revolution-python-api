@@ -1,5 +1,5 @@
 # Threaded-readout-for-revolution-python-api
-Usefull if several data sources are to be polled simultaneouslly without mutually waiting for each other.
+Usefull if several data sources are to be acquired simultaneouslly without mutually waiting for each other.
 
 Requires installation of the bitalino python api: https://github.com/BITalinoWorld/revolution-python-api
 
