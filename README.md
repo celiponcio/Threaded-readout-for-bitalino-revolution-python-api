@@ -3,4 +3,4 @@ Usefull if several data sources are to be polled simultaneouslly without mutuall
 
 Requires installation of the bitalino python api: https://github.com/BITalinoWorld/revolution-python-api
 
-Data appears in a fifo in the main application.
+Data appears in a fifo in the main application. See example in bitalino_thread_test.py.
