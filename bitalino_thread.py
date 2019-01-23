@@ -16,10 +16,20 @@ class btt(object):
         #        self.readoutRate=10 # Hz, Not yet...
 
         self.macAddress = macAddress
-        self.__fifo_size=0
-        self.__btl = _BITalino(self.macAddress, self.timeout)
-        print(self.__btl.version())
-        self.__btl.battery(self.batteryThreshold)
+        try:
+            self.bitalino = _BITalino(self.macAddress, self.timeout)
+        except Exception as ex:
+            print str(ex)
+            self.bitalino = None
+            return
+        print(self.bitalino.version())
+        self.bitalino.battery(self.batteryThreshold)
+
+    def __del__(self):
+        if not self.bitalino:
+            return
+        self.bitalino.stop()
+        self.bitalino.close()
 
     def start(self):
     # handle errors, etc later
@@ -30,9 +40,9 @@ class btt(object):
         self.thread.start()
 
     def __aquire(self):
-        self.__btl.start(self.samplingRate, self.acqChannels)
+        self.bitalino.start(self.samplingRate, self.acqChannels)
         while (datetime.datetime.now() - self.__start_time).total_seconds()<self.duration:
-            raw_btl = self.__btl.read(self.nSamples)
+            raw_btl = self.bitalino.read(self.nSamples)
             # print(raw_btl[:, 5:].mean(0).T)
             self.btt_fifo = np.roll(self.btt_fifo, -1,0)
             self.btt_fifo[-1,:] = raw_btl[:, 5:].mean(0).T

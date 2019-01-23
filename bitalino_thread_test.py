@@ -2,6 +2,9 @@ from bitalino_thread import btt
 import time
 
 btt=btt('20:17:09:18:59:98') # this connects to bitalino
+#if not btt:
+if not btt.bitalino:
+    exit()
 
 # parameter defaults are:
 # btt.batteryThreshold = 30
